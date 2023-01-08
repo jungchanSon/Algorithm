@@ -40,6 +40,7 @@ def checkRipeTomato():
             if tomatoBoard[i][j] == 1:
                 temp.append([j, i])
     q.append(temp)
+    
 x, y = list(map(int, input().rstrip().split()))
 
 tomatoBoard = []
