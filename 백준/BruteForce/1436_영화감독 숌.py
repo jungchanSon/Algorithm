@@ -6,12 +6,13 @@ n = int(input().rstrip())
 
 #하나씩 더하면서 666 들어있는지 확인
 k = '666'
-while n-1:
+
+while n:
     if '666' in k:
         n -= 1
     k = str(int(k) + 1)
     
-print(int(k))
+print(int(k)-1)
 
 # f_k = ['6','6','6']
 # b_k = ['6','6','6']
