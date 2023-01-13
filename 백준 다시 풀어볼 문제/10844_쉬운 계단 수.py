@@ -21,7 +21,6 @@ else :
                 dp[i][j] = dp[i-1][j-1] + dp[i-1][j+1]
 
     print(sum(dp[n]) % 1000000000)
-    print(dp[n])
 
 """ case 2
 12  121 
