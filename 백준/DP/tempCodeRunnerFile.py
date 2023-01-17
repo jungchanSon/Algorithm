@@ -1,22 +1,23 @@
 import sys
 input = sys.stdin.readline
 
-n = int(input())
-data = [list(map(int, input().split())) for _ in range(n)]
-data.sort()
-
-dp = [0 for _ in range(n)]
-
-
-for i in range(1, len(data)):
+data1 = input()
+data2 = input()
+dp = [0 for _ in range(len(data1)-1)]
+if len(data1) < len(data2):
+    temp = data2
+    data2 = data1
+    data1 = temp
     
-    s = data[i][0]
-    e = data[i][1]
-    
-    for j in range(0, i):
-        if s < data[j][0] and e < data[j][1]:
-            dp[i] = max(dp[i], dp[j])
-        elif s > data[j][0] and e > data[j][1]:
-            dp[i] = max(dp[i], dp[j])
-    dp[i] += 1
-print(n - len(dp))
+for d1 in range(len(data1)-1):
+    for d2 in range(len(data2)-1):
+        if data1[d1] == data2[d2]:
+            if d2 == 0:
+                dp[d2] = 1
+            else:
+                dp[d2]= max(dp[:d2])+1
+print(max(dp))
+""""
+ACAYKP
+CAPCAK
+"""
