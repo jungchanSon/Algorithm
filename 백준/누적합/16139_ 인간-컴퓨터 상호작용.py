@@ -1,38 +1,26 @@
 import sys
 input = sys.stdin.readline
-
 S = input().rstrip()
-q = int(input())
+q = int(input().rstrip())
+dp = [[0 for _ in range(len(S)+1)] for _ in range(26)]
 
+for i in range(len(S)):
+    for j in range(26):
+        if ord(S[i]) - 97 == j:
+            dp[j][i+1] = dp[j][i] + 1
+        else :
+            dp[j][i+1] = dp[j][i] 
 data = []
 for _ in range(q):
-    temp = input().rstrip().split()
-    temp[1:3] = list(map(int, temp[1:3]))
-    data.append(temp)
+    data = input().rstrip().split()
     
-set_data = list(set(list(S)))
-set_data.sort()
-
-dp = [[0 for _ in range(len(S)+1)] for _ in range(len(set_data))]
-for i in range(len(S)):
-    index = set_data.index(S[i])
-    dp[index][i+1] = max(dp[index]) +1
-
-# for i in dp:
-#     print(i)
-# print(dp)
-
-for i in data:
-    alpa = i[0]
-    start = i[1]
-    end = i[2]
-    if alpa in set_data:
-        index = set_data.index(alpa)
-        a = max(dp[index][:start+1])
-        b = max(dp[index][start+1:end+2])
-        print(b-a)
-    else :
-        print(0)
+    index = ord(data[0]) - 97
+    start = int(data[1])
+    end = int( data[2])
+    
+    a = dp[index][start]
+    b = dp[index][end+1]
+    print(b-a)
 
 """
 seungjaehwang
