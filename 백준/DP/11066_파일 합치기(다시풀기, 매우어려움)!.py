@@ -25,6 +25,4 @@ A   0   AB  min(AB, BC)+ABC     min(AC, BD) + ABCD
 B       0   BC                  min(BC, CD) + ABCD
 C           0                   CD  
 D                               0
-
-
 """
