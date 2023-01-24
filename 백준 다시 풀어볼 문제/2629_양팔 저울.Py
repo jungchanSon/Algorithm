@@ -6,16 +6,17 @@ items = list(map(int, input().rstrip().split()))
 
 m = int(input())
 check = list(map(int, input().rstrip().split()))
-
-dp = [0 for _ in range(80001)]
+ans = []
+dp = [[0 for _ in range((i+1)*500+1)] for i in range(n+1)]
 s = 0
 def rec(cnt, w):
-    if dp[w] == 0:
-        dp[w] = 1
-    else : 
-        return
     if cnt >= n :
         return
+    if dp[cnt][w] == 0:
+        dp[cnt][w] = 1
+    else : 
+        return
+
     
     rec(cnt+1, w+items[cnt])
     rec(cnt+1, items[cnt])
@@ -24,9 +25,11 @@ def rec(cnt, w):
 rec(0, 40000)
 
 for i in check:
-    if dp[i+40000] == 0:
-        print("N", end=" ")
+    if dp[n][i+40000] == 0:
+        ans.append("N")
     else : 
-        print("Y", end=" ")
+        ans.append("Y")
+print(" ".join(ans))
         
 # 참고 : https://www.acmicpc.net/board/view/56807 
+#       https://my-coding-notes.tistory.com/157#recentComments 
