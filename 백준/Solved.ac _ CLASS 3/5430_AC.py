@@ -30,10 +30,12 @@ for _ in range(T):
     if check:
         if reverse:
             s.reverse()
-        
-        print("[",end="")
-        for i in range(len(s)):
-            if i != len(s) - 1:
-                print(s[i], end=",")
-            else :
-                print(s[i], end="]\n")
+        if len(s):
+            print("[",end="")
+            for i in range(len(s)):
+                if i != len(s) - 1:
+                    print(s[i], end=",")
+                else :
+                    print(s[i], end="]\n")
+        else : 
+            print("[]")
