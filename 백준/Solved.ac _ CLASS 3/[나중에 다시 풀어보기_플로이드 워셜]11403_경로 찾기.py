@@ -15,7 +15,7 @@ for k in range(N):
                 arr[i][j] = 1
 
 for i in arr:
-    print(i)
+    print(*i)
     
 """
 나중에 다시 한번 풀어보기
