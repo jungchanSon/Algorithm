@@ -1,4 +1,5 @@
 import sys
+sys.setrecursionlimit(100000)
 input = sys.stdin.readline
 
 N = int(input())
@@ -14,14 +15,12 @@ def dfs(n):
         return
     else :
         visited[n] = True
-    if n == 1:
-        return True
-    
+        
     for i in arr[n]:
-        if dfs(i):
-            ans[n] = i
-            return True
-for i in range(2, N+1):
-    visited = [False for _ in range(N+1)]
-    dfs(i)
-print(*(ans[2:]), sep="\n")
+        if not ans[i]: 
+            ans[i] = n
+        dfs(i)
+visited = [False for _ in range(N+1)]
+dfs(1)
+for i in ans[2:]:
+    print(i)
