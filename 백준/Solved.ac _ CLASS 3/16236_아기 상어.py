@@ -3,7 +3,7 @@ import math
 from collections import deque
 input = sys.stdin.readline
 
-N = int(input())
+N = int(input().rstrip())
 arr = []
 visited = [[False for _ in range(N)] for _ in range(N)]
 shark = 0
@@ -14,20 +14,21 @@ for i in range(N):
         shark = (data.index(9), i)
         
 
-dx = [0, 0, -1, 1]
-dy = [-1, 1, 0, 0]
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
 
 sharkSize = 2
 sharkEating = 0
 saveTime = 0
-print(shark)
 arr[shark[1]][shark[0]] = 0
-temp = []
 
-minX, minY, minTime = 0, 0, 0
-
+check = False
+minX = 22
+minY = 22
+minTime = 22
 def bfs():
-    global minX, minY, minTime
+    global minX, minY, minTime, check
+
     while q:
         cx, cy, time = q.popleft()
         if visited[cy][cx]:
@@ -45,41 +46,42 @@ def bfs():
             if arr[ny][nx] > sharkSize: 
                 continue
             
-            if arr[cy][cx] < sharkSize:
-                if minTime == time:
-                    if cy < minY:
-                        minY = cy
-                    elif cy == minY and cx < minX:
-                        minX = cx
-                else :
-                    minX = cx
-                    minY = cy
+            if arr[ny][nx] and time <= minTime and arr[ny][nx] < sharkSize:
+                check = True
+                if  ny < minY :
+                    minY = ny
+                    minX = nx
                     minTime = time
-            
+                elif ny == minY and nx < minX:
+                    minY = ny
+                    minX = nx
+                    minTime = time
+                    
             q.append((nx,ny, time+1))
-
-print(saveTime)
-
-for i in visited:
-    print(i)
 
 q = deque()
 q.append((shark[0], shark[1], 1))
-cnt = 0
+
 while True:
-    if cnt > len(arr) ** 2:
-        break
+    check = False
+    visited = [[0 for _ in range(N)] for _ in range(N)]
+    minX = 22
+    minY = 22
+    minTime = 22
+  
     bfs()
-    saveTime += minTime # -1
+    if not check:
+        break
+   
+    saveTime += visited[minY][minX] -1
     arr[minY][minX] = 0
-    
+   
     sharkEating += 1
     
     if sharkEating == sharkSize : 
         sharkSize += 1
         sharkEating = 0
         
-    q.append((minX, minY, saveTime))
-    cnt += 1 
+    q.append((minX, minY, 1))
     
 print(saveTime)
