@@ -40,7 +40,23 @@ def dijkstra(start):
             cost = distance[now] + j[1] 
             if cost < distance[j[0]]:
                 distance[j[0]] = cost
-                
+
+
+def dijkstra2(start):
+    q = []
+    heapq.heappush(q, (0, start))
+    distance[start] = 0
+    
+    while q:
+        dist, now = heapq.heappop(q)
+        if distance[now] < dist:
+            continue
+        for i in graph[now]:
+            cost = distance[now] + i[1]
+            if cost < distance[i[0]]:
+                distance[i[0]] = cost
+                heapq.heappush(q, (cost, i[0]))
+ 
 dijkstra(start)
 
 for i in range(1, N+1):
