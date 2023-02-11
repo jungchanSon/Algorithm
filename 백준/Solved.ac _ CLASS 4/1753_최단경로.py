@@ -30,4 +30,7 @@ def djikstra(start):
                 
 djikstra(K)
 for i in distance[1:]:
-    print(i)
+    if i == math.inf:
+        print("INF")
+    else:
+        print(i)
