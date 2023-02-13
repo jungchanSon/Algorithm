@@ -8,7 +8,7 @@ def solution(begin, target, words):
     if target not in words:
         return 0
    
-    def dfs(word, cnt):
+    def bfs():
         nonlocal answer
         q = deque()
         q.append((begin, 0))
@@ -28,7 +28,7 @@ def solution(begin, target, words):
                         visited[i] = True
                         q.append((words[i], p+1))
                         
-    dfs(begin, 0)
+    bfs()
     
     if answer == 51:
         return 0
