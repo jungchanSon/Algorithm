@@ -1,25 +1,21 @@
 import sys
 
 def solution(number, k):
-    ans = []
+    stack = []
 
-    l = list(number)
-    cnt = 0
-    
-    for i in range(len(number)-1):
-        if cnt == k : 
-            break
-        m = max(l[i: i+k-cnt+1])
-        
-        index = l.index(m)
-        
-        l = l[:index]+l[index:]
-        cnt += index - i
-    while cnt != k:
-        l.pop()
-        cnt+=1 
-    return "".join(l)
+    for n in number:
+        print(stack)
+        while stack and stack[-1] < n and k > 0:
+            stack.pop()
+            k -= 1
+        stack.append(n)
 
-print(solution("943", 2))
+    # 아직 제거되지 못 한 숫자를 뒤에서 삭제
+    if k > 0:
+        stack = stack[:-k]
+
+    return ''.join(stack)
+
+print(solution("12943", 3))
 print(solution("1231234", 3))
 print(solution("4177252841", 4))
