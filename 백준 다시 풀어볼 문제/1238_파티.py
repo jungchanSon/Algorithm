@@ -38,17 +38,7 @@ def dijkstra(start):
             if cost < distance[i[0]]:
                 distance[i[0]] = cost
                 heapq.heappush(q, (cost, i[0]))
-    # for j in arr[start]:
-    #     distance[j[0]] = j[1]
-
-    # for _ in range(N-1):
-    #     now = get_smallest_node()
-    #     visited[now] = True
-        
-        # for j in arr[now]:
-        #     cost = distance[now] + j[1]
-        #     if cost < distance[j[0]]:
-        #         distance[j[0]] = cost
+   
 
 result = [0 for _ in range(N+1)]
 temp = []
