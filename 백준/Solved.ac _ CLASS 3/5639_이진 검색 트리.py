@@ -1,5 +1,6 @@
 import sys
 from collections import deque
+sys.setrecursionlimit(10001)
 input = sys.stdin.readline
 
 arr = []
@@ -9,24 +10,24 @@ while True:
     except: break
 
 q = deque()
-q.append(arr[0])
 
-# for i in arr[1:]:
-#     if q[-1] > i:
-#         q.append(i)
-#     else :
-#         print(q.pop())
+def post_order(pre_start, pre_end):
+    if pre_start > pre_end :
+        return None
 
-for i in range(1, len(arr[1:])):
-    if q[-1] > arr[i]:
-        q.append(arr[i])
+    root = arr[pre_start]
+    middle_index = pre_end+1
+    
+    for i in range(pre_start, pre_end+1):
+        if arr[i] > root:
+            middle_index = i
+            # print (middle_index)
+            break
         
-    else :
-        print(q.pop())
-        q.append(arr[i])
-        while q[-2] > arr[i] and q[-3] < arr[i]:
-            print(q.pop())
-            print(q.pop())
-
+    post_order(pre_start+1, middle_index-1)
+    post_order(middle_index, pre_end)
+    q.append(root)
+    
+post_order(0, len(arr) -1)
 while q:
-    print(q.pop())
+    print(q.popleft())
