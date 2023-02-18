@@ -31,6 +31,10 @@ def matrix_pow(m, B):
         
 ans = matrix_pow(matrix, B)
 
+for i in range(len(ans)):
+    for j in range(len(ans[0])):
+        ans[i][j] = ans[i][j] % 1000
+        
 for i in ans:
     print(*i)
 

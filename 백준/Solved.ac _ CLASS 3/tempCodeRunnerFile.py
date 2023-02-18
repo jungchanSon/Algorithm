@@ -1,38 +1,40 @@
 import sys
 input = sys.stdin.readline
 
-N = int(input())
-in_order = list(map(int, input().rstrip().split()))
-post_order = list(map(int, input().rstrip().split()))
+N, B = map(int, input().rstrip().split())
+matrix = []
+for _ in range(N):
+    matrix.append(list(map(int, input().rstrip().split())))
 
-position = [0 for _ in range(N+1)]
-for i in range(N):
-    position[in_order[i]] = i
+def multi_matrix(m1, m2):
+    temp_matrix = [[0] * len(m1) for _ in range(len(m1))]
+    s = 0
+    for k in range(len(m1)):
+        for i in range(len(m1)):
+            s = 0
+            for j in range(len(m1[i])):
+                s += m1[k][j] * m2[j][i]
+            temp_matrix[k][i] = s % 1000
 
-def preOder(in_start, in_end, post_start, post_end):
-    if in_start > in_end or post_start > post_end :
-        return None
-    
-    
-    root = post_order[post_end]
-    root_index = position[root]
-    
-    left = root_index - in_start
-    right = in_end - root_index
-    
-    print(post_order[post_end] , end = " ")
-    
-    preOder(in_start, in_start + left -1, post_start, post_start+ left - 1)
-    preOder(in_end - right + 1, in_end, post_end-right, post_end-1)
+    return temp_matrix
 
-preOder(0, N-1, 0, N-1)
+def matrix_pow(m, B):
+    if B == 1 :
+        return m
     
-    
-# https://velog.io/@bae_mung/Python-BOJ-2263-%ED%8A%B8%EB%A6%AC%EC%9D%98-%EC%88%9C%ED%9A%8C
-# https://ku-hug.tistory.com/135?category=978336
+    else: 
+        mat = matrix_pow(m, B//2)
+        if B % 2 == 0:
+            return multi_matrix(mat, mat)
+        if B % 2 == 1:
+            return multi_matrix(multi_matrix(mat, mat), m)
+        
+ans = matrix_pow(matrix, B)
+
+for i in ans:
+    print(*i)
 
 """
-Pre-order : 전위순회
-In-order : 중위순회
-Post-order : 후위순회
+C^n -> | C^(n/2) * C^(n/2) 
+       | C^((n-1)/2) * C^((n-1)/2) * C
 """
