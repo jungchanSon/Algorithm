@@ -31,7 +31,7 @@ def pow_m(m, n) :
 temp = pow_m(fib_matrix, N)
 temp[0][0] = temp[0][0] % 1000000007
 temp[0][1] = temp[0][1] % 1000000007
-temp[1][0] = temp[1][0] % 1000000007
+temp[1][0] = temp[1][ 0] % 1000000007
 temp[1][1] = temp[1][1] % 1000000007
 
 print(temp[1][0])
