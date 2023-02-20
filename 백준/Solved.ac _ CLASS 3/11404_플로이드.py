@@ -12,13 +12,18 @@ for i in range(m):
     else:
         gragh[start][end] = cost
     
-for i in range(1, n+1):
-    gragh[i][i] = 0
+# for i in range(1, n+1):
+#     gragh[i][i] = 0
 
 for k in range(1, n+1):
     for i in range(1, n+1):
         for j in range(1, n+1):
             gragh[i][j] = min(gragh[i][j], gragh[i][k]+gragh[k][j])
+    
+for i in range(1, n+1):
+    for j in range(1, n+1):
+        if i == j or gragh[i][j] == math.inf:
+            gragh[i][j] = 0
 
 for i in gragh[1:]:
     print(*i[1:])
