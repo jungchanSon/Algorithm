@@ -9,7 +9,7 @@ def bt(i, depth, l):
     if depth == M:
         print(*l)
         return
-    
+   
     for j in range(i, len(arr)):
         bt(j, depth+1, l+[arr[j]])
 
