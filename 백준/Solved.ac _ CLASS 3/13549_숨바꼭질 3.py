@@ -11,7 +11,7 @@ def bfs():
     q.append((n, 0))
     
     while q:
-        current, cnt = q.popleft()
+        current, cnt = q.popleft() 
         if visited[current] != -1:
             if visited[current] > cnt:
                 visited[current] = cnt
