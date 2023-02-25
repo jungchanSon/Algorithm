@@ -8,16 +8,15 @@ board = []
 for _ in range(R):
     board.append(list(map(int, input().rstrip().split())))
 
-
 air_cleaner_pos = []
 for i in range(R):
     for j in range(C):
         if board[i][j] == -1:
             air_cleaner_pos.append((i, j))
+
 board2 = [[0 for _ in range(C)] for _ in range(R)]
 dx = [0, 0, -1, 1]
 dy = [-1, 1, 0, 0]
-
 def one_time(prev_board, target_board):
     for i in range(R):
         for j in range(C):
