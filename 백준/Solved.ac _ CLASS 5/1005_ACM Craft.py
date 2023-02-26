@@ -39,7 +39,8 @@ for _ in range(T):
     #         if prev_build_success :
     #             q.append(nextBuild)
     #         graph[nextBuild] = max(graph[nextBuild], graph[current]+times[nextBuild-1])
-
+    # target = int(input())
+    # print(graph[target])
 
     #위상정렬 이용
     inDegree = [0 for _ in range(N+1)]

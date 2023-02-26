@@ -23,7 +23,6 @@ for _ in range(T):
         right_vector = [0, 0]
         
         for x, y in left_combi[i]:
-            print(x, y)
             left_vector[0] += x
             left_vector[1] += y
             
@@ -35,4 +34,4 @@ for _ in range(T):
         final_vector = [left_vector[0]-right_vector[0], left_vector[1]-right_vector[1]]
         ans = min(ans, math.sqrt(final_vector[0]**2 + final_vector[1]**2))
 
-    print("ans", ans)
+    print(ans)
