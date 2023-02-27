@@ -1,38 +1,31 @@
 import sys
-import math
-from itertools import combinations
 input = sys.stdin.readline
 
-T = int(input())
-for _ in range(T):
-    N = int(input())
-    P = []
-    
-    for _ in range(N):
-        a, b = map(int, input().rstrip().split())
-        P.append((a, b))
-    
-    combi_list = list(combinations(P, N//2))
-    combi_len = len(combi_list)
-    left_combi = combi_list[:combi_len//2]
-    right_combi = combi_list[combi_len//2:]
-    right_combi.reverse()
-    ans = math.inf
-    for i in range(combi_len//2):
-        left_vector = [0, 0]
-        right_vector = [0, 0]
-        
-        for x, y in left_combi[i]:
-            print(x, y)
-            left_vector[0] += x
-            left_vector[1] += y
-            
-        for x, y in right_combi[i]:
-            right_vector[0] += x
-            right_vector[1] += y
-            
-        
-        final_vector = [left_vector[0]-right_vector[0], left_vector[1]-right_vector[1]]
-        ans = min(ans, math.sqrt(final_vector[0]**2 + final_vector[1]**2))
+def count_prime_sum(n):
+    # 에라토스테네스의 체 알고리즘을 사용하여 n 이하의 소수를 구함
+    primes = [True] * (n + 1)
+    primes[0] = primes[1] = False
+    for i in range(2, int(n ** 0.5) + 1):
+        if primes[i]:
+            for j in range(i * i, n + 1, i):
+                primes[j] = False
 
-    print("ans", ans)
+    # 연속된 소수의 합으로 n을 나타낼 수 있는 경우를 찾음
+    count = 0
+    for i in range(2, n + 1):
+        if primes[i]:
+            total = i
+            j = i + 1
+            while total < n and j < len(primes):
+                if primes[j]:
+                    total += j
+                    if total == n:
+                        count += 1
+                        break
+                j += 1
+            if total >= n:
+                break
+
+    return count
+
+print(count_prime_sum(int(input())))
