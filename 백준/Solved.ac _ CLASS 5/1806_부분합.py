@@ -27,25 +27,21 @@ ans = math.inf
 #         if dp[j] - dp[i-1] >= S:
 #             ans = min(ans, j-i+1)
 
-
+arr.append(0)
 start = 0
-end = 1
+end = 0
 current_sum = arr[0]
 
 while start <= end and end < N:
     if current_sum < S:
         end += 1
-        if end == N:
-            if ans == math.inf:
-                print(0)
-            else:
-                break
-        
         current_sum += arr[end]
     else:
         ans = min(ans, end-start+1)
         
         current_sum -= arr[start]
         start += 1
-
-print(ans)
+if ans == math.inf:
+    print(0)
+else:
+    print(ans)
