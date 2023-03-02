@@ -9,6 +9,7 @@ for _ in range(N):
     arr.append((x1, y1, x2, y2))
 
 union_find_table = [i for i in range(N)]
+
 def union(a, b):
     a = find(a)
     b = find(b)
@@ -51,35 +52,58 @@ def ccw(a, b, c):
     else:
         return -1
 
-for i in range(N):
-    for j in range(i+1, N):
-        if find(i) != find(j):
-            # check_result = check_cross(arr[i], arr[j])
-            p1p2 = ccw([arr[i][0], arr[i][1]], [arr[i][2], arr[i][3]], [arr[j][0], arr[j][1]]) * ccw([arr[i][0], arr[i][1]], [arr[i][2], arr[i][3]], [arr[j][2], arr[j][3]])
-            p3p4 = ccw([arr[j][0], arr[j][1]], [arr[j][2], arr[j][3]], [arr[i][0], arr[i][1]]) * ccw([arr[j][0], arr[j][1]], [arr[j][2], arr[j][3]], [arr[i][2], arr[i][3]])
-
-            if p1p2 == 0 and p3p4 == 0:
-                max_p1p2 = max(arr[i][0], arr[i][1])
-                max_p3p4 = max(arr[j][0], arr[j][1])
-                min_p1p2 = min(arr[i][0], arr[i][1])
-                min_p3p4 = min(arr[j][0], arr[j][1])
-                
-                if min_p3p4 <= max_p1p2 and min_p1p2 <= max_p3p4 :
-                    union(i, j)
+def check_cross(a, b):
+    x1, y1, x2, y2 = a
+    x3, y3, x4, y4 = b
+    p1p2 = ccw([x1, y1], [x2, y2], [x3, y3]) * ccw([x1, y1], [x2, y2], [x4, y4])
+    p3p4 = ccw([x3, y3], [x4, y4], [x1, y1]) * ccw([x3, y3], [x4, y4], [x2, y2])
+    if p1p2 <= 0 and p3p4 <= 0:
+        if p1p2 == 0 and p3p4 == 0:
+            # max_p1p2 = max(x1, x2)
+            # max_p3p4 = max(x3, x4)
+            # min_p1p2 = min(x1, x2)
+            # min_p3p4 = min(x3, x4)
             
-            if p1p2 <= 0 and p3p4 <= 0:
-                union(i, j)
+            
+            #  https://www.acmicpc.net/board/view/112112
+            #  이 부분이 문제였다...
+            if max(x1, x2) >= min(x3, x4) and max(x3, x4) >= min(x1, x2) and max(y1, y2) >= min(y3, y4) and max(y3, y4) >= min (y1, y2) :
+                return True
+            else:
+                return False
+            
+        else:
+            return True
+    else : 
+        return False
+        
+
+for i in range(N-1):
+    for j in range(i+1, N):
+        if find(i) != find(j) and check_cross(arr[i], arr[j]):
+            union(i, j)
+            # check_result = check_cross(arr[i], arr[j])
+            # p1p2 = ccw([arr[i][0], arr[i][1]], [arr[i][2], arr[i][3]], [arr[j][0], arr[j][1]]) * ccw([arr[i][0], arr[i][1]], [arr[i][2], arr[i][3]], [arr[j][2], arr[j][3]])
+            # p3p4 = ccw([arr[j][0], arr[j][1]], [arr[j][2], arr[j][3]], [arr[i][0], arr[i][1]]) * ccw([arr[j][0], arr[j][1]], [arr[j][2], arr[j][3]], [arr[i][2], arr[i][3]])
+            # if p1p2 <= 0 and p3p4 <= 0:
+            #     if p1p2 == 0 and p3p4 == 0:
+            #         max_p1p2 = max(arr[i][0], arr[i][1])
+            #         max_p3p4 = max(arr[j][0], arr[j][1])
+            #         min_p1p2 = min(arr[i][0], arr[i][1])
+            #         min_p3p4 = min(arr[j][0], arr[j][1])
+                    
+            #         if min_p3p4 <= max_p1p2 and min_p1p2 <= max_p3p4 :
+            #             union(i, j)
+            #     else:
+            #         union(i, j)
             
 for i in range(N):
     union_find_table[i] = find(union_find_table[i])
-
 counter = Counter(union_find_table)
 print(len(counter))
 print(max(counter.values()))
 
 
-# print(len(counter))
-# print(max(counter.values()))
 """
     1차 실패.
     
