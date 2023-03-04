@@ -1,61 +1,52 @@
 import sys
 input = sys.stdin.readline
+board = [list(map(int, list(input().rstrip()))) for _ in range(9)]
+empty_space = []
 
-N = int(input())
-arr = list(map(int, input().rstrip().split()))
-INF = 1e9
+for i in range(9):
+    for j in range(9):
+        if board[i][j] == 0:
+            empty_space.append((i, j))
 
-
-# 투 포인트
-l_index = 0
-r_index = N-1
-
-total = INF
-min_l_index = 0
-min_r_index = 0
-
-while l_index != r_index:
-    l_value = arr[l_index]
-    r_value = arr[r_index]
+def check_row(cur, value):
+    y, x = cur
     
-    if r_value <= 0:
-        v1 = 0
-        v2 = 0
-        if r_index + 1 < N:
-            v1 = r_value + arr[r_index+1]
-        if r_index - 1 >= 0:
-            v2 = r_value + arr[r_index-1]
-        if v1 and abs(v1) < total :
-            total = abs(v1)
-            min_l_index = r_index
-            min_r_index = r_index+1
-        if v2 and abs(v2) < total:
-            min_l_index = r_index-1
-            min_r_index = r_index
-        break
-    if l_value >= 0:
-        v1 = 0
-        v2 = 0
-        if l_index+1 < N:
-            v1 = l_value + arr[l_index+1]
-        if l_index-1 >= 0:
-            v2 = l_value + arr[l_index-1]
-        if v1 and abs(v1) < total:
-            total = abs(v1)
-            min_l_index = l_index
-            min_r_index = l_index+1
-        if v2 and abs(v2) < total:
-            min_l_index = l_index-1
-            min_r_index = l_index
-        break
-    total = min(total, abs(l_value + r_value))
-    if total == abs(l_value + r_value):
-        min_l_index = l_index
-        min_r_index = r_index
-    
-    if abs(l_value) > abs(r_value):
-        l_index +=1
-    else:
-        r_index -= 1
+    if value not in board[y]:
+        return True
+    else: 
+        return False
 
-print(arr[min_l_index], arr[min_r_index])
+def check_column(cur, value):
+    y, x = cur
+    
+    for i in range(9):
+        if board[i][x] == value:
+            return False
+    return True 
+
+def check_area(cur, value):
+    y, x = cur
+    
+    area_x = x // 3
+    area_y = y // 3
+    
+    for i in range(area_y * 3, area_y * 3 + 3):
+        for j in range(area_x * 3, area_x * 3 + 3):
+            if board[i][j] == value:
+                return False
+    return True
+
+def dfs(depth):
+    if depth >= len(empty_space):
+        for i in board:
+            print(i)
+        return
+    cy, cx = empty_space[depth]
+    pos = empty_space[depth]
+    for i in range(1, 10):
+        if check_column(pos, i) and check_row(pos, i) and check_area(pos, i):
+            board[cy][cx] = i
+            dfs(depth+1)
+            board[cy][cx] = 0
+            # print("    ", pos, i)
+dfs(0)
