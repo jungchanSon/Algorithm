@@ -1,52 +1,26 @@
 import sys
+import math
 input = sys.stdin.readline
-board = [list(map(int, list(input().rstrip()))) for _ in range(9)]
-empty_space = []
 
-for i in range(9):
-    for j in range(9):
-        if board[i][j] == 0:
-            empty_space.append((i, j))
+N = int(input())
+arr = list(map(int, input().rstrip().split()))
 
-def check_row(cur, value):
-    y, x = cur
-    
-    if value not in board[y]:
-        return True
-    else: 
-        return False
+arr.sort()
 
-def check_column(cur, value):
-    y, x = cur
-    
-    for i in range(9):
-        if board[i][x] == value:
-            return False
-    return True 
+l_index = 0
+r_index = N-1
+ans = [math.inf, []]
+while l_index < r_index:
+    l_r = arr[l_index] + arr[r_index]
+    for i in range(l_index+1, r_index):
+        if ans[0] > abs(l_r + arr[i]):
+            ans[0] = abs(l_r + arr[i])
+            ans[1] = [arr[l_index], arr[i], arr[r_index]]
+            
+    if l_r >= 0:
+        r_index -= 1
+    elif l_r < 0:
+        l_index += 1
+        
 
-def check_area(cur, value):
-    y, x = cur
-    
-    area_x = x // 3
-    area_y = y // 3
-    
-    for i in range(area_y * 3, area_y * 3 + 3):
-        for j in range(area_x * 3, area_x * 3 + 3):
-            if board[i][j] == value:
-                return False
-    return True
-
-def dfs(depth):
-    if depth >= len(empty_space):
-        for i in board:
-            print(i)
-        return
-    cy, cx = empty_space[depth]
-    pos = empty_space[depth]
-    for i in range(1, 10):
-        if check_column(pos, i) and check_row(pos, i) and check_area(pos, i):
-            board[cy][cx] = i
-            dfs(depth+1)
-            board[cy][cx] = 0
-            # print("    ", pos, i)
-dfs(0)
+print(*ans[1])
