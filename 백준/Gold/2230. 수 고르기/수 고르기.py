@@ -8,19 +8,18 @@ for _ in range(n):
     arr.append(int(input()))
 arr.sort()
 
-ans = 2000000001
-for i in range(n):
-    s = i
-    e = len(arr)
-    while s < e:
-        mid = (s+e) // 2
-        if abs(arr[mid]- arr[i]) == m:
-            print(m)
-            quit()
-            
-        elif abs(arr[mid]-arr[i]) > m :
-            e = mid 
-            ans = min(ans, abs(arr[mid]-arr[i]))
-        else:
-            s = mid + 1
+st = 0
+en = 0
+ans = 1e12
+while st <= en and st < n and en < n :
+    
+    if abs(arr[st] - arr[en]) < m:
+        en += 1
+    elif abs(arr[st] - arr[en]) > m:
+        ans = min(ans, abs(arr[st] - arr[en]))
+        st += 1
+    else:
+        print(m)
+        quit()
+        
 print(ans)
