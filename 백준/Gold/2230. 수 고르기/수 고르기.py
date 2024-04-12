@@ -1,25 +1,27 @@
 import sys
-import bisect
-input = sys.stdin.readline
+import math
 
-n, m = map(int, input().rsplit())
-arr = []
-for _ in range(n):
-    arr.append(int(input()))
+input = sys.stdin.readline 
+N, M = map(int,input().rsplit())
+arr = [int(input()) for _ in range(N)]
 arr.sort()
-
-st = 0
-en = 0
-ans = 1e12
-while st <= en and st < n and en < n :
-    
-    if abs(arr[st] - arr[en]) < m:
-        en += 1
-    elif abs(arr[st] - arr[en]) > m:
-        ans = min(ans, abs(arr[st] - arr[en]))
-        st += 1
-    else:
-        print(m)
-        quit()
+ans = math.inf 
+if N <= 1:
+    print(0)
+if N <= 2:
+    print (arr[1] - arr[0])
+else: 
+    l, r = 0, 1
+    while l <= r and r < N:
         
-print(ans)
+        res = arr[r] - arr[l]
+        if res == M:
+            ans = res 
+            break
+        elif res > M:
+            l += 1
+            ans = min(ans, res)
+        elif res < M:
+            r += 1 
+            
+    print(ans)
