@@ -17,7 +17,7 @@ visited = [False for _ in range(n+1)]
 q = [(a, 0)]
 check = True
 while q: 
-    c, l = q.pop()
+    c, l = q.pop(0)
     if c == b:
         print(l)
         check =False
