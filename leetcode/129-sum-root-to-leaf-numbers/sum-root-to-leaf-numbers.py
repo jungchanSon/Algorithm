@@ -6,17 +6,13 @@
 #         self.right = right
 class Solution:
     def sumNumbers(self, root: Optional[TreeNode]) -> int:
-        ans = 0
-        def recursive(node, v):
-            nonlocal ans
-            nv = v*10+node.val
-            if not node.left and not node.right:
-                ans += nv
+        def recursion(node, s):
+            if not node:
+                return 0
+            ns = s*10 + node.val
 
-            if node.left:
-                recursive(node.left, nv)
-            if node.right:
-                recursive(node.right, nv)
+            if node.left == None and node.right == None:
+                return ns
 
-        recursive(root, 0)
-        return ans
+            return recursion(node.left, ns) + recursion(node.right, ns)
+        return recursion(root, 0)
