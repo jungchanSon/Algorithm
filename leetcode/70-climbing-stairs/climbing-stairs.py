@@ -1,4 +1,5 @@
 class Solution:
+    @cache
     def climbStairs(self, n: int) -> int:
         dp = [0 for _ in range(45)]
         dp[0] =1
